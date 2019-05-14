@@ -33,7 +33,7 @@ def parse_args():
 
     # hyperparameters sent by the client are passed as command-line arguments to the script.
     parser = argparse.ArgumentParser(description='Train YOLOv3 networks with random input shape.')
-
+  
     parser.add_argument('--network', type=str, default='darknet53',
                         help="Base network name which serves as feature extraction base.")
     parser.add_argument('--obj-metric', type=str, default='mAP',
@@ -106,7 +106,7 @@ def parse_args():
                         help='Disable mixup training if enabled in the last N epochs.')
     parser.add_argument('--label-smooth', action='store_true', help='Use label smoothing.')
 
-    LOCAL_MODE = False
+    LOCAL_MODE = True
     
     # input data and model directories
     if LOCAL_MODE :

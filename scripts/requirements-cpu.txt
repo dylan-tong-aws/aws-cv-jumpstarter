@@ -1,0 +1,3 @@
+pandas
+mxnet-mkl>=1.4.0
+gluoncv
