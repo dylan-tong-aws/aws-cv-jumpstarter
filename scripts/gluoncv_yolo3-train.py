@@ -1,10 +1,10 @@
 import argparse
 import os
-from os import walk
-import shutil
+#from os import walk
+#import shutil
 import logging
 import time
-import json
+#import json
 import warnings
 import numpy as np
 import mxnet as mx
@@ -395,16 +395,16 @@ if __name__ == '__main__':
 
     # load data
     train_dataset, val_dataset, classes = load_data()
-    print('copying classes.cv from {} to {}.'.format(CLASSES_FILE,os.path.join(MODEL_DIR, 'classes.csv')))
-    shutil.copyfile(CLASSES_FILE, os.path.join(MODEL_DIR, 'classes.params'))
+    #print('copying classes.cv from {} to {}.'.format(CLASSES_FILE,os.path.join(MODEL_DIR, 'classes.csv')))
+    #shutil.copyfile(CLASSES_FILE, os.path.join(MODEL_DIR, 'classes.params'))
 
     # network
     net_name = '_'.join(('yolo3', args.network, 'custom'))
     args.save_prefix += net_name
     
-    MODEL_INFO = {"base":net_name, "weights":'{:s}_best.params'.format(net_name)}
-    with open (os.path.join(MODEL_DIR,'model_info.params'),'w') as model_meta :
-        json.dump(MODEL_INFO,model_meta)
+   # MODEL_INFO = {"base":net_name, "weights":'{:s}_best.params'.format(net_name)}
+   # with open (os.path.join(MODEL_DIR,'model_info.params'),'w') as model_meta :
+   #     json.dump(MODEL_INFO,model_meta)
         
     
     # use sync bn if specified
