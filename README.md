@@ -1,4 +1,4 @@
-# aws-cv-quickstart
+# AWS Computer Vision Jumpstarter
 A quick-start guide for Computer Vision on AWS
 
 Version 0.1
