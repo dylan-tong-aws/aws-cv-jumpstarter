@@ -445,9 +445,8 @@ if __name__ == '__main__':
     # training
     train(net, train_data, val_data, eval_metric, ctx, args)
     
-  
-    print('attempting walk in model_dir..')
-    for (dirpath, dirnames, filenames) in walk(MODEL_DIR):
-        for f in filenames :
-            print(f)
+    #print('attempting walk in model_dir..')
+    #for (dirpath, dirnames, filenames) in walk(MODEL_DIR):
+    #    for f in filenames :
+    #        print(f)
             
