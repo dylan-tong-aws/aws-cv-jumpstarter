@@ -1,4 +1,7 @@
 # AWS Computer Vision Jumpstarter
+
+author: dylatong@amazon.com
+
 A quick-start guide for Computer Vision on AWS
 
 Version 0.1
