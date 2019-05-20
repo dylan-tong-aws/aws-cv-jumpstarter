@@ -4,6 +4,11 @@ author: dylatong@amazon.com
 
 A quick-start guide for Computer Vision on AWS
 
+Progress Journal
+
+05/15/09: Object Detection Module Completed. 3 Labs: Ground Truth, SM Object Detection Algorithm (end-to-end), and GluonCV on SageMaker (end-to-end).
+
+---------------
 Version 0.1
 
 Journey
