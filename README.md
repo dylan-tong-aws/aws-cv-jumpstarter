@@ -1,9 +1,14 @@
 # AWS Computer Vision Jumpstarter
 author: dylatong@amazon.com
 
+---
+
 This repository is a collection of content to help enable engineers and data scientists to succeed on their Computer Vision projects on AWS.
 
-**Sample Object Detection Workshop Package (est. 4 hours)**
+### Sample Workshop Packages
+Examples of modules that you can use together to tailor a workshop for your audience.
+
+**I. Object Detection Workshop Package (est. 4 hours)**
 
 Below is content you can package up into a Object Detection workshop for SageMaker. You can put together a 4-5 hour agenda with this content.
 
