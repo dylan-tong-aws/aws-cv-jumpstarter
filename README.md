@@ -1,8 +1,7 @@
 # AWS Computer Vision Jumpstarter
-
 author: dylatong@amazon.com
 
-A Quick-start guide for Computer Vision on AWS
+This repository is a collection of content to help enable engineers and data scientists to succeed on their Computer Vision projects on AWS.
 
 **Sample Object Detection Workshop Package (est. 4 hours)**
 
