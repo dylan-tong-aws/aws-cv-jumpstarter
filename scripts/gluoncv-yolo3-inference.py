@@ -1,63 +1,52 @@
 import os
 from os import walk
-import json
-import time
-import pandas as pd
 import numpy as np
 import mxnet as mx
 from mxnet import gluon
 import gluoncv as gcv
 
+def load_sym_model(sym_f, param_f, model_dir) :
 
-def get_model_info(model_dir):
+#    try:
+#        a = mx.nd.zeros((1,), ctx=mx.gpu(0))
+#        device = [mx.gpu(0)]
+#        print('GPU device is available')
+#    except:
+    if os.environ['USE_EIA'] == "1":
+        device = [mx.eia()] #use EIA for low cost GPU acceleration
+    else #use cpu with MK DNN acceleration
+        device = [mx.cpu()]
+#        print('Using CPU on local machine. GPU device was not detected')
 
-    # Temp hack. I would like to have this as part of configurations.
-    CLASSES =  ['Cardinal','Northern_Flicker','American_Goldfinch',
-          'Ruby_throated_Hummingbird','Blue_Jay']
-
-    for (dirpath, dirnames, filenames) in walk(model_dir):
-        for f in filenames :
-            idx = f.find('_best.params')
-            if idx > 0 :
-                TRAINED_WEIGHTS = f
-                BASE_MODEL = f[0:idx]
-
-      #classes_df = pd.read_csv(os.path.join(model_dir, 'classes.csv'), header=None)
-  #CLASSES = classes_df[1].tolist()
-                                 
-  #  with open(os.path.join(model_dir,'model_info.json')) as model_info :
-  #      meta = json.load(model_info)
-  #      BASE_MODEL = meta['base']
-  #      TRAINED_WEIGHTS = meta['weights']
-
-    
-    return BASE_MODEL, TRAINED_WEIGHTS, CLASSES
-   
+    sym_file = os.path.join(model_dir, sym_f)
+    param_file = os.path.join(model_dir, param_f)
+    return gluon.nn.SymbolBlock.imports(sym_file, ['data'], param_file, ctx=device)
+       
 def model_fn(model_dir):
     
-    ##todo: should support GPU as well
-    ctx = mx.cpu()
-    
-    base, w, cls = get_model_info(model_dir)
-    net = gcv.model_zoo.get_model(base, classes=cls, pretrained_base=False)
-    net.load_parameters(os.path.join(model_dir,w))
-    
-    return net
+    model = load_sym_model(os.environ["SYM_FILE_NAME"], os.environ["PARAM_FILE_NAME"], model_dir)
+    return model
 
-def transform_fn(net, data, input_content_type, output_content_type):
+def input_fn(request_body, request_content_type):
     
-    ##todo: should support GPU as well
-    ctx = mx.cpu()
-  
-    x, image = gcv.data.transforms.presets.yolo.transform_test(mx.img.imdecode(data), 512)
-    cid, score, bbox = net(x)  
+    input_object, image = gcv.data.transforms.presets.yolo.transform_test(mx.img.imdecode(request_body), 512)
+    return input_object
+
+def predict_fn(input_object, model):
+
+    if os.environ['USE_EIA']  == "1":
+        input_object = input_object.copyto(mx.eia())
+        
+    cid, score, bbox = model(input_object)  
     
     c= cid[0].asnumpy().reshape(cid[0].shape[0]*cid[0].shape[1])
     s=score[0].asnumpy().reshape(score[0].shape[0]*score[0].shape[1])
     bb= bbox[0].asnumpy().reshape(bbox[0].shape[0]*bbox[0].shape[1])
     
-    stack = np.concatenate((c,s,bb))
-   
-    response_body = stack.tobytes()
+    return np.concatenate((c,s,bb))
     
-    return response_body, output_content_type
+def output_fn(prediction, content_type):
+    
+    response_body = prediction.tobytes()
+    
+    return response_body

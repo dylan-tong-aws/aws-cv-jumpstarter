@@ -1,3 +1,2 @@
-pandas
-mxnet-cu90mkl>=1.4.0
-gluoncv
+mxnet-mkl==1.6.0
+gluoncv==0.8.0

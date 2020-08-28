@@ -1,10 +1,7 @@
 import argparse
 import os
-#from os import walk
-#import shutil
 import logging
 import time
-#import json
 import warnings
 import numpy as np
 import mxnet as mx
@@ -23,6 +20,9 @@ from gluoncv.data.dataloader import RandomTransformDataLoader
 from gluoncv.utils.metrics.voc_detection import VOC07MApMetric
 from gluoncv.utils.metrics.coco_detection import COCODetectionMetric
 from gluoncv.utils import LRScheduler, LRSequential
+
+os.environ['MXNET_CUDNN_AUTOTUNE_DEFAULT'] = '0'
+SYM_MODEL_NAME= "yolov3-gcv"
 
 EVAL_METRICS = {
     'mAP':0.0,
@@ -113,6 +113,7 @@ def parse_args():
     parser.add_argument('--label-smooth', action='store_true', help='Use label smoothing.')
     parser.add_argument('--local', action='store_true', default=False,
                         help='Set to true if you want to run this script locally.')
+    parser.add_argument('--save-format', type=str, default='symbolic', help='Select between imperative or symbolic as the save format')
     
     # input data and model directories
     parser.add_argument('--model-dir', type=str)
@@ -197,16 +198,26 @@ def get_dataloader(net, train_dataset, val_dataset, data_shape, batch_size, num_
         batch_size, False, batchify_fn=val_batchify_fn, last_batch='keep', num_workers=num_workers)
     return train_loader, val_loader
 
-def save_params(net, best_map, current_map, epoch, save_interval, prefix, model_dir):
+def save_params(net, best_map, current_map, epoch, args) :
+ 
     current_map = float(current_map)
  
     if current_map > best_map[0]:
-        best_map[0] = current_map     
-        net.save_parameters('{:s}_best.params'.format(os.path.join(model_dir,prefix)))
-        with open(prefix+'_best_map.log', 'a') as f:
-            f.write('{:04d}:\t{:.4f}\n'.format(epoch, current_map))
-    if save_interval and epoch % save_interval == 0:
-        net.save_parameters('{:s}_{:04d}_{:.4f}.params'.format(os.path.join(model_dir,prefix), epoch, current_map))
+        
+        best_map[0] = current_map  
+        
+        if args.save_format == 'imperative' :
+            net.save_parameters('{:s}_best.params'.format(os.path.join(args.model_dir,args.save_prefix)))
+            with open(prefix+'_best_map.log', 'a') as f:
+                f.write('{:04d}:\t{:.4f}\n'.format(epoch, current_map))
+        elif args.save_format == 'symbolic':
+            net.export('{:s}'.format(os.path.join(args.model_dir,SYM_MODEL_NAME)))
+        else:
+            print("Unsupported mode: {}".format(args.mode))
+    
+    if args.save_interval and epoch % args.save_interval == 0:
+        net.save_parameters('{:s}_{:04d}_{:.4f}.params'.format(os.path.join(args.model_dir,args.save_prefix), epoch, current_map))
+       
     
 def validate(net, val_data, ctx, eval_metric, obj_metric=0):
     """Test on validation dataset."""
@@ -375,8 +386,8 @@ def train(net, train_data, val_data, eval_metric, ctx, args):
             current_map = float(mean_ap[-1])
         else:
             current_map = 0.
-        save_params(net, best_map, current_map, epoch, args.save_interval, args.save_prefix, args.model_dir)
-        
+        save_params(net, best_map, current_map, epoch, args)
+
 if __name__ == '__main__':
     
     args = parse_args()
@@ -421,9 +432,11 @@ if __name__ == '__main__':
                         transfer = TRANSFER, classes= classes,
                         norm_kwargs={'num_devices': len(ctx)})
         async_net = get_model(net_name, pretrained_base=False, classes= classes)  # used by cpu worker
+        
     else:
         net = get_model(net_name, pretrained_base=PRETRAINED_BASE, transfer = TRANSFER, classes = classes)
         async_net = net
+        
     if args.resume.strip():
         MODEL_CHECKPOINT_WEIGHTS = args.resume.strip()
         print(MODEL_CHECKPOINT_WEIGHTS)

@@ -1,3 +1,2 @@
-mxnet-mkl==1.4.0
-pandas
-gluoncv==0.4.0
+mxnet-mkl==1.6.0
+gluoncv==0.8.0
