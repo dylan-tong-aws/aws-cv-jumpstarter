@@ -1,2 +1,0 @@
-mxnet-cu101==1.6.0.post0
-gluoncv==0.8.0

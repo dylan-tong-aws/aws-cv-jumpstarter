@@ -417,7 +417,6 @@ if __name__ == '__main__':
    # with open (os.path.join(MODEL_DIR,'model_info.params'),'w') as model_meta :
    #     json.dump(MODEL_INFO,model_meta)
         
-    
     # use sync bn if specified
     TRANSFER = args.pre_trained_weights
     PRETRAINED_BASE= True
