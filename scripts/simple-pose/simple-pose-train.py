@@ -18,6 +18,7 @@ from gluoncv.data.transforms.presets.simple_pose import SimplePoseDefaultTrainTr
 from gluoncv.utils.metrics import HeatmapAccuracy
 
 MODEL_DIR = ""
+SYM_MODEL_NAME= "simple-pose-gcv"
 logger = logging.getLogger('')
 os.environ['MXNET_CUDNN_AUTOTUNE_DEFAULT'] = '0'
 
@@ -39,6 +40,8 @@ def parse_args():
                         help='number of preprocessing workers')
     parser.add_argument('--num-epochs', type=int, default=3,
                         help='number of training epochs.')
+    parser.add_argument('--save-prefix', type=str, default='',
+                        help='Saving parameter prefix')
     parser.add_argument('--lr', type=float, default=0.1,
                         help='learning rate. default is 0.1.')
     parser.add_argument('--wd', type=float, default=0.0001,
@@ -85,6 +88,7 @@ def parse_args():
                         help='name of training log file')
     parser.add_argument('--local', action='store_true', default=False,
                         help='Set to true if you want to run this script locally.')
+    parser.add_argument('--save-format', type=str, default='symbolic', help='Select between imperative or symbolic as the save format')
 
     # input data and model directories
     parser.add_argument('--model-dir', type=str)
@@ -265,6 +269,7 @@ def train(opt):
             metric.update(label, outputs)
 
             loss_val += sum([l.mean().asscalar() for l in loss]) / num_gpus
+                            
             if opt.log_interval and not (i+1)%opt.log_interval:
                 metric_name, metric_score = metric.get()
                 logger.info('Epoch[%d] Batch [%d]\tSpeed: %f samples/sec\tloss=%f\tlr=%f\t%s=%.3f'%(
@@ -275,20 +280,41 @@ def train(opt):
         time_elapsed = time.time() - tic
         logger.info('Epoch[%d]\t\tSpeed: %d samples/sec over %d secs\tloss=%f\n'%(
                      epoch, int(i*batch_size / time_elapsed), int(time_elapsed), loss_val / (i+1)))
+        
         if save_frequency and save_dir and (epoch + 1) % save_frequency == 0:
             net.save_parameters('%s/%s-%d.params'%(save_dir, model_name, epoch))
             trainer.save_states('%s/%s-%d.states'%(save_dir, model_name, epoch))
+        
+        if best_val_score > (loss_val / (i+1)) :
+            best_val_score = (loss_val / (i+1))
+            save_params(net, best_val_score, epoch, opt)
 
-    if save_frequency and save_dir:
-        net.save_parameters('%s/%s-%d.params'%(save_dir, model_name, opt.num_epochs-1))
-        trainer.save_states('%s/%s-%d.states'%(save_dir, model_name, opt.num_epochs-1))
+#    if save_frequency and save_dir:
+#        net.save_parameters('%s/%s-%d.params'%(save_dir, model_name, opt.num_epochs-1))
+#        trainer.save_states('%s/%s-%d.states'%(save_dir, model_name, opt.num_epochs-1))
 
     return net
 
+def save_params(net, score, epoch, args) :
+ 
+    if args.save_format == 'imperative' :
+        net.save_parameters('{:s}_best.params'.format(os.path.join(args.model_dir,args.save_prefix)))
+        with open(prefix+'_best_map.log', 'a') as f:
+            f.write('{:04d}:\t{:.4f}\n'.format(epoch, score))
+    elif args.save_format == 'symbolic':
+        net.export('{:s}'.format(os.path.join(args.model_dir, SYM_MODEL_NAME)))
+    else:
+        print("Unsupported mode: {}".format(args.mode))
+            
 def main():
     
     args = parse_args()
     enable_logging(args)
+    
+    # network
+    net_name = 'simple_pose_resnet18_v1b'
+    args.save_prefix += net_name
+    
     net = train(args)
 
 if __name__ == '__main__':
