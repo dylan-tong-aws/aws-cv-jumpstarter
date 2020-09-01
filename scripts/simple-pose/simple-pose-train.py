@@ -123,9 +123,9 @@ def enable_logging(opt) :
     logger.addHandler(streamhandler)
     logger.info(opt)
     
-##Ideally, your data should be processed into RecordIO format and loaded using a function like the folllowing.
 def load_data(opt):
 
+## Ideally, your data should be processed into RecordIO format and loaded using a function like the folllowing:
 #    train_dataset = gcv.data.RecordFileDetection(os.path.join(opt.train,'train.rec'))
 #    val_dataset = gcv.data.RecordFileDetection(os.path.join(opt.test,'val.rec'))
 
@@ -213,8 +213,6 @@ def train(opt):
                     step_factor=lr_decay, power=2)
     ])
 
-    # optimizer = 'sgd'
-    # optimizer_params = {'wd': opt.wd, 'momentum': 0.9, 'lr_scheduler': lr_scheduler}
     optimizer = 'adam'
     optimizer_params = {'wd': opt.wd, 'lr_scheduler': lr_scheduler}
     if opt.dtype != 'float32':
@@ -288,10 +286,6 @@ def train(opt):
         if best_val_score > (loss_val / (i+1)) :
             best_val_score = (loss_val / (i+1))
             save_params(net, best_val_score, epoch, opt)
-
-#    if save_frequency and save_dir:
-#        net.save_parameters('%s/%s-%d.params'%(save_dir, model_name, opt.num_epochs-1))
-#        trainer.save_states('%s/%s-%d.states'%(save_dir, model_name, opt.num_epochs-1))
 
     return net
 
