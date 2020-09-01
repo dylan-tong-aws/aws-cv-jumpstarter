@@ -3,7 +3,14 @@ author: dylatong@amazon.com
 
 ---
 
-This repository is a collection of content to help enable engineers and data scientists to succeed on their Computer Vision projects on AWS.
+This repository is a collection of content to help enable engineers and data scientists to succeed on their Computer Vision projects on AWS. The repository currently includes labs for:
+
+1. Amazon Rekognition Custom Labels: Computer Vision AutoML for Image Classification and Object Detection
+2. Amazon GroundTruth: Managing Machine Learning Annotations at Scale
+3. Amazon SageMaker Built-in Algorithms: A brief follow-up to the GroundTruth Lab for building a SSD Object Detector using the SageMaker built-in Algo.
+4. Amazon SageMaker and GluonCV for Object Detection: Training and Deploying YOLOv3 on GluonCV and SageMaker.
+5. Amazon SageMaker and GluonCV for Pose Estimation: Traininga nd Deploying an Inference Pipeline for 2D Human Pose predictions.
+
 
 ### Sample Workshop Packages
 Examples of modules that you can use together to tailor a workshop for your audience.
