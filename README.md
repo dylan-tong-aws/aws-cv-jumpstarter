@@ -1,4 +1,4 @@
-# AWS Computer Vision Jumpstarter Kit
+# AWS Computer Vision Jump Starter Kit
 author: dylatong@amazon.com
 
 ---
