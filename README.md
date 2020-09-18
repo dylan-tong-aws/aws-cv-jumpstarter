@@ -12,7 +12,8 @@ This repository is a collection of content to help enable engineers and data sci
 5. Amazon SageMaker and GluonCV for Pose Estimation: Traininga nd Deploying an Inference Pipeline for 2D Human Pose predictions.
 
 Lab guides are shared [here](https://github.com/dylan-tong-aws/aws-cv-jumpstarter/tree/master/lab-guides).
-2020 Presentation is [here](https://github.com/dylan-tong-aws/aws-cv-jumpstarter/blob/master/presentations/aws-cv-partner-enablement-2020.pdf)
+
+2020 Overview Presentation is shared [here](https://github.com/dylan-tong-aws/aws-cv-jumpstarter/blob/master/presentations/aws-cv-partner-enablement-2020.pdf)
 
 ### Sample Workshop Packages
 Examples of modules that you can use together to tailor a workshop for your audience.
