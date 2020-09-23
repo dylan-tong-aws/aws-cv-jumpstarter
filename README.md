@@ -15,6 +15,11 @@ Lab guides are shared [here](https://github.com/dylan-tong-aws/aws-cv-jumpstarte
 
 2020 Overview Presentation is shared [here](https://github.com/dylan-tong-aws/aws-cv-jumpstarter/blob/master/presentations/aws-cv-partner-enablement-2020.pdf)
 
+Related Content:
+* 2019 Image Classification and Object Detection Partner [Webinar](https://www.youtube.com/watch?v=t7smVKL6d4Q)
+* Image Similarity using PyTorch AWS ML [Blog](https://aws.amazon.com/blogs/machine-learning/a-personalized-shop-by-style-experience-using-pytorch-on-amazon-sagemaker-and-amazon-neptune/) (references to repository)
+* Jetson Nano Smart Cam [Repository](https://github.com/dylan-tong-aws/jetson-nano-smart-cam)
+
 ### Sample Workshop Packages
 Examples of modules that you can use together to tailor a workshop for your audience.
 
