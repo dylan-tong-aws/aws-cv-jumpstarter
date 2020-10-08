@@ -9,7 +9,7 @@ This repository is a collection of content to help enable engineers and data sci
 2. Amazon GroundTruth: Managing Machine Learning Annotations at Scale
 3. Amazon SageMaker Built-in Algorithms: A brief follow-up to the GroundTruth Lab for building a SSD Object Detector using the SageMaker built-in Algorithm.
 4. Amazon SageMaker and GluonCV for Object Detection: Training and Deploying YOLOv3 on GluonCV and SageMaker.
-5. Amazon SageMaker and GluonCV for Pose Estimation: Traininga nd Deploying an Inference Pipeline for 2D Human Pose predictions.
+5. Amazon SageMaker and GluonCV for Pose Estimation: Training and Deploying an Inference Pipeline for 2D Human Pose predictions.
 
 Lab guides are shared [here](https://github.com/dylan-tong-aws/aws-cv-jumpstarter/tree/master/lab-guides).
 
