@@ -27,7 +27,7 @@ Examples of modules that you can use together to tailor a workshop for your audi
 
 Below is content you can package up into a Object Detection workshop for SageMaker. You can put together a 4-5 hour agenda with this content.
 
-1. [AWS CV Introduction Presentation](https://github.com/dylan-tong-aws/aws-cv-jumpstarter/blob/master/presentations/AWS-CV-Jumpstarter-Intro.pptx)
+1. [AWS CV Introduction Presentation](https://github.com/dylan-tong-aws/aws-cv-jumpstarter/blob/master/presentations/aws-cv-partner-enablement-2020.pdf)
 2. [Workshop Guide](https://github.com/dylan-tong-aws/aws-cv-jumpstarter/blob/master/presentations/AWS-CV-Jumpstarter-Workshops.pptx): Use this as a sample template for the workshop. 
 3. [Lab1: Ground Truth](https://github.com/dylan-tong-aws/aws-cv-jumpstarter/blob/master/lab-guides/Lab1-GroundTruth/Lab1-%20Ground%20Truth.pdf):
     - Learn to create and manage a quality data set at
