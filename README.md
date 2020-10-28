@@ -53,7 +53,7 @@ Below is content you can package up into a Object Detection workshop for SageMak
     inference.
 
 
-**I. Complete AWS Computer Vision Workshop (est. 16 hours)**
+**II. Complete AWS Computer Vision Workshop (est. 16 hours)**
 
 1. [AWS CV Introduction Presentation](https://github.com/dylan-tong-aws/aws-cv-jumpstarter/blob/master/presentations/aws-cv-partner-enablement-2020.pdf)
 2. [Rekognition Custom Labels Lab](https://github.com/dylan-tong-aws/aws-cv-jumpstarter/blob/master/lab-guides/Lab-Amazon%20Rekognition%20Custom%20Labels/Lab-Rekognition%20Custom%20Labels.pdf)
