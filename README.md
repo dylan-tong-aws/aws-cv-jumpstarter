@@ -87,8 +87,8 @@ Below is content you can package up into a Object Detection workshop for SageMak
         - Learn how to deploy a real-time endpoint for
     inference.
     - [Lab4: BYOS and Inference Pipelines- Pose Estimation](https://raw.githubusercontent.com/dylan-tong-aws/aws-cv-jumpstarter/master/notebooks/lab4-gluoncv-pose-estimation-pipeline-on-sagemaker.ipynb):
-    - Learn how to implement an inference pipeline of multiple Computer Vision models.
-    - Learn how to build and deploy a pose estimation model.
+        - Learn how to implement an inference pipeline of multiple Computer Vision models.
+        - Learn how to build and deploy a pose estimation model.
 4. [AWS CV@Edge online serices](http://cv-edge-aws.com/)
     - This is a online series with hands-on labs to teach you about CV@edge and associated tools available to you on AWS.
    
