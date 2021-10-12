@@ -1,2 +1,2 @@
 gluoncv==0.8.0 
-opencv-python==3.3.0.9
+opencv-python==4.2.0.32
